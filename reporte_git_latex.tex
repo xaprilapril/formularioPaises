@@ -1,0 +1,239 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{fancyvrb}
+\usepackage{enumitem}
+\geometry{margin=2.2cm}
+
+\title{Reporte: 5 Operaciones con Git}
+\author{Repositorio: formularioPaises}
+\date{08 de abril de 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Objetivo}
+Documentar 5 operaciones de Git con palabras simples y claras, incluyendo:
+\begin{itemize}[leftmargin=*]
+\item Comando o programa.
+\item Explicacion de parametros.
+\item Problema o situacion donde se aplico.
+\item Captura de pantalla.
+\item Efecto obtenido.
+\end{itemize}
+
+\section*{Nota importante sobre capturas}
+En este documento incluyo dos tipos de captura:
+\begin{itemize}[leftmargin=*]
+\item \textbf{Captura textual}: salida real en bloque de terminal o vista de cambios.
+\item \textbf{Espacio para imagen}: para que pegues tu screenshot si el profesor pide imagen visual.
+\end{itemize}
+
+\hrule
+\vspace{0.4cm}
+
+\section*{Operacion 1: Ver estado general}
+\textbf{Comando o programa}
+\begin{Verbatim}[fontsize=\small,frame=single]
+git status --short
+\end{Verbatim}
+
+\textbf{Explicacion de los parametros}
+\begin{itemize}[leftmargin=*]
+\item \texttt{--short}: muestra el estado en formato corto (mas facil de leer).
+\end{itemize}
+
+\textbf{Problema o situacion donde se aplico}
+\begin{itemize}[leftmargin=*]
+\item Queria revisar rapido que archivos estaban cambiados despues de modificar la API.
+\end{itemize}
+
+\textbf{Captura de pantalla (texto)}
+\begin{Verbatim}[fontsize=\small,frame=single]
+Resumen observado en el workspace:
+- Hay cambios sin stage en varios archivos.
+- Ejemplos: python-api/app.py, python-api/README.md,
+  y varios archivos dentro de formulario-paises-app/.
+\end{Verbatim}
+
+\textbf{Captura de pantalla (imagen, opcional)}
+\begin{itemize}[leftmargin=*]
+\item Guarda una imagen como \texttt{capturas/op1-status.png} y descomenta esta linea:
+\end{itemize}
+% \includegraphics[width=0.95\textwidth]{capturas/op1-status.png}
+
+\textbf{Efecto obtenido}
+\begin{itemize}[leftmargin=*]
+\item Se confirmo que el repositorio tiene cambios pendientes por organizar.
+\end{itemize}
+
+\hrule
+\vspace{0.4cm}
+
+\section*{Operacion 2: Revisar diferencia del backend}
+\textbf{Comando o programa}
+\begin{Verbatim}[fontsize=\small,frame=single]
+git diff -- python-api/app.py
+\end{Verbatim}
+
+\textbf{Explicacion de los parametros}
+\begin{itemize}[leftmargin=*]
+\item \texttt{diff}: compara cambios no confirmados.
+\item \texttt{-- python-api/app.py}: limita la comparacion a un archivo.
+\end{itemize}
+
+\textbf{Problema o situacion donde se aplico}
+\begin{itemize}[leftmargin=*]
+\item Necesitaba validar que la API paso de archivo de texto a SQLite.
+\end{itemize}
+
+\textbf{Captura de pantalla (texto)}
+\begin{Verbatim}[fontsize=\small,frame=single]
+Fragmentos del cambio observado:
++ import sqlite3
++ ARCHIVO_BASE_DATOS = Path(__file__).with_name('organizaciones.db')
++ def inicializar_base_datos():
++   CREATE TABLE IF NOT EXISTS organizaciones (...)
++ INSERT INTO organizaciones (...)
+\end{Verbatim}
+
+\textbf{Captura de pantalla (imagen, opcional)}
+% \includegraphics[width=0.95\textwidth]{capturas/op2-diff-app.png}
+
+\textbf{Efecto obtenido}
+\begin{itemize}[leftmargin=*]
+\item Se comprobo que el backend ahora guarda en base de datos SQLite.
+\end{itemize}
+
+\hrule
+\vspace{0.4cm}
+
+\section*{Operacion 3: Revisar diferencia de documentacion}
+\textbf{Comando o programa}
+\begin{Verbatim}[fontsize=\small,frame=single]
+git diff -- python-api/README.md
+\end{Verbatim}
+
+\textbf{Explicacion de los parametros}
+\begin{itemize}[leftmargin=*]
+\item \texttt{diff}: muestra diferencia de contenido.
+\item \texttt{-- python-api/README.md}: revisa solo el README de la API.
+\end{itemize}
+
+\textbf{Problema o situacion donde se aplico}
+\begin{itemize}[leftmargin=*]
+\item Queria asegurar que la documentacion coincida con el nuevo guardado en SQLite.
+\end{itemize}
+
+\textbf{Captura de pantalla (texto)}
+\begin{Verbatim}[fontsize=\small,frame=single]
+Cambio principal observado:
+- guardar organizaciones en archivo de texto
++ guardar organizaciones en base de datos SQLite
+- organizaciones.txt
++ organizaciones.db
+\end{Verbatim}
+
+\textbf{Captura de pantalla (imagen, opcional)}
+% \includegraphics[width=0.95\textwidth]{capturas/op3-diff-readme.png}
+
+\textbf{Efecto obtenido}
+\begin{itemize}[leftmargin=*]
+\item La documentacion quedo coherente con el codigo real.
+\end{itemize}
+
+\hrule
+\vspace{0.4cm}
+
+\section*{Operacion 4: Preparar archivos para commit}
+\textbf{Comando o programa}
+\begin{Verbatim}[fontsize=\small,frame=single]
+git add python-api/app.py python-api/README.md
+\end{Verbatim}
+
+\textbf{Explicacion de los parametros}
+\begin{itemize}[leftmargin=*]
+\item \texttt{add}: pasa cambios al area de stage.
+\item \texttt{python-api/app.py python-api/README.md}: solo agrega esos 2 archivos.
+\end{itemize}
+
+\textbf{Problema o situacion donde se aplico}
+\begin{itemize}[leftmargin=*]
+\item Habia muchos cambios en el repo y se queria confirmar solo lo del backend.
+\end{itemize}
+
+\textbf{Captura de pantalla (texto sugerido para tu terminal)}
+\begin{Verbatim}[fontsize=\small,frame=single]
+Despues de ejecutar:
+git status --short
+
+Esperado:
+A  python-api/app.py
+A  python-api/README.md
+(El resto sigue como cambios sin stage)
+\end{Verbatim}
+
+\textbf{Captura de pantalla (imagen, opcional)}
+% \includegraphics[width=0.95\textwidth]{capturas/op4-add.png}
+
+\textbf{Efecto obtenido}
+\begin{itemize}[leftmargin=*]
+\item Se separan los cambios importantes del backend del resto de archivos.
+\end{itemize}
+
+\hrule
+\vspace{0.4cm}
+
+\section*{Operacion 5: Verificar stage antes de commit}
+\textbf{Comando o programa}
+\begin{Verbatim}[fontsize=\small,frame=single]
+git diff --cached --name-only
+\end{Verbatim}
+
+\textbf{Explicacion de los parametros}
+\begin{itemize}[leftmargin=*]
+\item \texttt{diff --cached}: revisa lo que esta en stage.
+\item \texttt{--name-only}: muestra solo nombres de archivo.
+\end{itemize}
+
+\textbf{Problema o situacion donde se aplico}
+\begin{itemize}[leftmargin=*]
+\item Antes de commit, queria verificar exactamente que se iba a confirmar.
+\end{itemize}
+
+\textbf{Captura de pantalla (texto)}
+\begin{Verbatim}[fontsize=\small,frame=single]
+Si ya hiciste git add de la Operacion 4, debe salir:
+python-api/app.py
+python-api/README.md
+\end{Verbatim}
+
+\textbf{Captura de pantalla (imagen, opcional)}
+% \includegraphics[width=0.95\textwidth]{capturas/op5-cached.png}
+
+\textbf{Efecto obtenido}
+\begin{itemize}[leftmargin=*]
+\item Se evita hacer un commit con archivos que no querias incluir.
+\end{itemize}
+
+\hrule
+\vspace{0.4cm}
+
+\section*{Cierre}
+Con estas 5 operaciones se logro:
+\begin{itemize}[leftmargin=*]
+\item Revisar el estado general del repositorio.
+\item Validar cambios clave en backend y README.
+\item Preparar y verificar archivos para un commit limpio.
+\end{itemize}
+
+\section*{Comando final recomendado}
+\begin{Verbatim}[fontsize=\small,frame=single]
+git commit -m "feat(api): guardar organizaciones en SQLite"
+\end{Verbatim}
+
+\end{document}

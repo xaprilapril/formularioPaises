@@ -1,0 +1,62 @@
+<section class="contenedor">
+  <div class="encabezado">
+    <h1>Organizaciones internacionales</h1>
+  </div>
+
+  <p class="estado cargando" *ngIf="cargandoPaises">Cargando países...</p>
+  <p class="estado error" *ngIf="mensajeError">{{ mensajeError }}</p>
+  <p class="estado exito" *ngIf="mensajeExito">{{ mensajeExito }}</p>
+
+  <form [formGroup]="miForm" (ngSubmit)="alEnviar()" novalidate>
+    <div class="campo">
+      <label for="nombre">Nombre de organización</label>
+      <input id="nombre" type="text" formControlName="nombre" placeholder="Ej. ONU" />
+      <small *ngIf="miForm.controls.nombre.touched && miForm.controls.nombre.invalid">
+        El nombre es obligatorio.
+      </small>
+    </div>
+
+    <div class="campo">
+      <label for="siglas">Siglas</label>
+      <input id="siglas" type="text" formControlName="siglas" placeholder="Ej. OEA" />
+      <small *ngIf="miForm.controls.siglas.touched && miForm.controls.siglas.invalid">
+        Las siglas son obligatorias.
+      </small>
+    </div>
+
+    <div class="campo">
+      <label for="pais">País</label>
+      <select id="pais" formControlName="pais" (change)="seleccionarPais()">
+        <option value="">Selecciona un país</option>
+        <option *ngFor="let pais of paises" [value]="pais.codigo">{{ pais.nombre }}</option>
+      </select>
+      <small *ngIf="miForm.controls.pais.touched && miForm.controls.pais.invalid">
+        Debes elegir un país.
+      </small>
+    </div>
+
+    <div class="campo">
+      <label for="capital">Capital</label>
+      <input id="capital" type="text" formControlName="capital" readonly placeholder="Se completa solo" />
+    </div>
+
+    <div class="campo">
+      <label for="moneda">Moneda</label>
+      <input id="moneda" type="text" formControlName="moneda" readonly placeholder="Se completa solo" />
+    </div>
+
+    <div class="campo">
+      <label for="bandera">Bandera</label>
+      <input id="bandera" type="url" formControlName="bandera" readonly placeholder="Se completa solo" />
+    </div>
+
+    <div class="preview" *ngIf="miForm.controls.bandera.value">
+      <p>Previsualización de la bandera</p>
+      <img [src]="miForm.controls.bandera.value" alt="Bandera del país seleccionado" width="140" />
+    </div>
+
+    <button type="submit" [disabled]="miForm.invalid || guardando">
+      {{ guardando ? 'Guardando...' : 'Guardar' }}
+    </button>
+  </form>
+</section>
